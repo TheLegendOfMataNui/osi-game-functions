@@ -45,9 +45,63 @@ function typeName(type) {
     }
 }
 
+function functionContainsToken(namespaceName, functionName, functionData, token) {
+    return (namespaceName + "::" + functionName).toLowerCase().includes(token) || functionData.info.toLowerCase().includes(token);
+}
+
+function functionVersionContainsToken(functionVersionData, token) {
+    // Address
+    if (functionVersionData.address.toLowerCase() == token)
+        return true;
+
+    // Parameter types
+    for (var i = 0; i < functionVersionData.argc[1]; i++) {
+        if (typeName(functionVersionData.argt[i][0]).toLowerCase().includes(token)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function applyFilter(filterText) {
+    for (var namespaceName in data) {
+        let namespace = data[namespaceName];
+        var showNamespace = false;
+
+        for (functionName in namespace.functions) {
+            let func = namespace.functions[functionName];
+
+            var show = true;
+            var tokens = filterText.split(" ");
+            for (var i = 0; i < tokens.length; i++) {
+                if (!functionContainsToken(namespaceName, functionName, func, tokens[i].toLowerCase())) {
+                    // Only show the function if one of the versions contains the token
+                    show = false;
+                    for (versionName in func.versions) {
+                        for (var j = 0; j < func.versions[versionName].length; j++) {
+                            show = functionVersionContainsToken(func.versions[versionName][j], tokens[i].toLowerCase());
+                            if (show)
+                                break;
+                        }
+                        if (show)
+                            break;
+                    }
+                }
+                if (!show)
+                    break;
+            }
+            if (show)
+                showNamespace = true;
+
+            functionElements[(namespaceName + "::" + functionName).toLowerCase()].style.display = show ? "" : "none";
+        }
+        namespaceElements[namespaceName].style.display = showNamespace ? "" : "none";
+    }
+}
+
 function createFunctionVersionElement(namespaceName, name, versionName, data) {
     let element = document.createElement("div");
-    element.classList.add("row");
+    element.classList.add("row", "osi-function-version");
 
     // Version
     let versionElement = document.createElement("h5");
@@ -120,10 +174,12 @@ function createFunctionVersionElement(namespaceName, name, versionName, data) {
 
 function createFunctionElement(namespaceName, name, data) {
     let element = document.createElement("div");
+    element.classList.add("osi-function");
+    let fullName = namespaceName + "::" + name;
 
     let headerElement = document.createElement("h4");
     let nameElement = document.createElement("code");
-    nameElement.innerHTML = namespaceName.toLowerCase() + "::" + name.toLowerCase();
+    nameElement.innerHTML = fullName.toLowerCase();
     headerElement.appendChild(nameElement);
     element.appendChild(headerElement);
 
@@ -133,7 +189,6 @@ function createFunctionElement(namespaceName, name, data) {
 
     for (versionName in data.versions) {
         for (var i = 0; i < data.versions[versionName].length; i++) {
-            element.appendChild(document.createElement("br"));
             let e = createFunctionVersionElement(namespaceName, name, versionName, data.versions[versionName][i]);
             element.appendChild(e);
         }
@@ -144,20 +199,28 @@ function createFunctionElement(namespaceName, name, data) {
 
 function createNamespaceElement(name, data) {
     let element = document.createElement("li");
-    element.classList.add("list-group-item");
+    element.classList.add("osi-namespace", "list-group-item", "p-0");
+    let anchorElement = document.createElement("a");
+    let headerElement = document.createElement("div");
+    headerElement.classList.add("osi-namespace-header");
+    headerElement.setAttribute("data-toggle", "collapse");
+    headerElement.setAttribute("href", "#namespace-" + name);
     let nameElement = document.createElement("h3");
     nameElement.innerHTML = name;
-    element.appendChild(nameElement);
+    headerElement.appendChild(nameElement);
     let descElement = document.createElement("p");
-    descElement.innerHTML = data.info;
-    element.appendChild(descElement);
+    descElement.innerHTML = data.info.length == 0 ? "<No info>" : data.info;
+    headerElement.appendChild(descElement);
+    anchorElement.appendChild(headerElement);
+    element.appendChild(anchorElement);
     let contentElement = document.createElement("div");
+    contentElement.classList.add("collapse", "show");
+    contentElement.setAttribute("id", "namespace-" + name);
 
     for (functionName in data.functions) {
-        contentElement.appendChild(document.createElement("br"));
         let e = createFunctionElement(name, functionName, data.functions[functionName]);
         contentElement.appendChild(e);
-        functionElements[functionName] = e;
+        functionElements[(name + "::" + functionName).toLowerCase()] = e;
     }
 
     element.appendChild(contentElement);
@@ -172,6 +235,8 @@ function onDataLoaded(loadedData) {
         moduleList.appendChild(element);
         namespaceElements[namespace] = element;
     }
+
+    filterInput.addEventListener("input", function(event) { applyFilter(filterInput.value); });
 }
 
 function loadData() {
