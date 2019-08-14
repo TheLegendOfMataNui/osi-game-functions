@@ -3,7 +3,8 @@ let moduleList = document.getElementById("module-list");
 
 let versionNames = {
     "a_0.006": "Alpha",
-    "b_01-10-23": "Beta"
+    "b_01-10-23": "Beta",
+    "mod_bettersaver": "BetterSaver"
 }
 let variantTypeNames = {
     "1": "OSI Instance",
@@ -51,7 +52,7 @@ function functionContainsToken(namespaceName, functionName, functionData, token)
 
 function functionVersionContainsToken(functionVersionData, token) {
     // Address
-    if (functionVersionData.address.toLowerCase() == token)
+    if (functionVersionData.address !== null && functionVersionData.address.toLowerCase() == token)
         return true;
 
     // Parameter types
@@ -155,17 +156,19 @@ function createFunctionVersionElement(namespaceName, name, versionName, data) {
     signatureElement.innerHTML = signature;
 
     // Address
-    let addressElement = document.createElement("div");
-    addressElement.classList.add("row");
-    let addressTitleElement = document.createElement("div");
-    addressTitleElement.classList.add("col-sm-3");
-    addressTitleElement.innerHTML = "Address";
-    addressElement.appendChild(addressTitleElement);
-    let addressValueElement = document.createElement("code");
-    addressValueElement.classList.add("col-sm-9");
-    addressValueElement.innerHTML = "0x" + data.address;
-    addressElement.appendChild(addressValueElement);
-    dataElement.appendChild(addressElement);
+    if (data.address !== null) {
+        let addressElement = document.createElement("div");
+        addressElement.classList.add("row");
+        let addressTitleElement = document.createElement("div");
+        addressTitleElement.classList.add("col-sm-3");
+        addressTitleElement.innerHTML = "Address";
+        addressElement.appendChild(addressTitleElement);
+        let addressValueElement = document.createElement("code");
+        addressValueElement.classList.add("col-sm-9");
+        addressValueElement.innerHTML = "0x" + data.address;
+        addressElement.appendChild(addressValueElement);
+        dataElement.appendChild(addressElement);
+    }
 
     element.appendChild(dataElement);
 

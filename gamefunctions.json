@@ -36400,6 +36400,22 @@
 						}
 					]
 				}
+			},
+			"ClearCinema": {
+				"info": "",
+				"versions": {
+					"mod_bettersaver": [
+						{
+							"address": null,
+							"name": null,
+							"argc": [
+								0,
+								0
+							],
+							"argt": []
+						}
+					]
+				}
 			}
 		}
 	},
@@ -43813,6 +43829,275 @@
 									16,
 									null
 								],
+								[
+									16,
+									null
+								]
+							]
+						}
+					]
+				}
+			}
+		}
+	},
+	"BetterSaver": {
+		"info": "BetterSaver is an API for managing arbitrary values in the save game, and compliments GcSaver.<br/>See https://github.com/TheLegendOfMataNui/LOMNHook/blob/initial-hookmod-api/BetterSaver/readme.md for more info.",
+		"functions": {
+			"GetBooleanValue": {
+				"info": "",
+				"versions": {
+					"mod_bettersaver": [
+						{
+							"address": null,
+							"name": null,
+							"argc": [
+								1,
+								1
+							],
+							"argt": [
+								[
+									16,
+									null
+								]
+							]
+						}
+					]
+				}
+			},
+			"SetBooleanValue": {
+				"info": "",
+				"versions": {
+					"mod_bettersaver": [
+						{
+							"address": null,
+							"name": null,
+							"argc": [
+								2,
+								2
+							],
+							"argt": [
+								[
+									16,
+									null
+								],
+								[
+									16,
+									null
+								]
+							]
+						}
+					]
+				}
+			},
+			"RemoveBooleanValue": {
+				"info": "",
+				"versions": {
+					"mod_bettersaver": [
+						{
+							"address": null,
+							"name": null,
+							"argc": [
+								1,
+								1
+							],
+							"argt": [
+								[
+									16,
+									null
+								]
+							]
+						}
+					]
+				}
+			},
+			"ToggleBooleanValue": {
+				"info": "",
+				"versions": {
+					"mod_bettersaver": [
+						{
+							"address": null,
+							"name": null,
+							"argc": [
+								1,
+								1
+							],
+							"argt": [
+								[
+									16,
+									null
+								]
+							]
+						}
+					]
+				}
+			},
+			"GetIntegerValue": {
+				"info": "",
+				"versions": {
+					"mod_bettersaver": [
+						{
+							"address": null,
+							"name": null,
+							"argc": [
+								1,
+								1
+							],
+							"argt": [
+								[
+									16,
+									null
+								]
+							]
+						}
+					]
+				}
+			},
+			"SetIntegerValue": {
+				"info": "",
+				"versions": {
+					"mod_bettersaver": [
+						{
+							"address": null,
+							"name": null,
+							"argc": [
+								2,
+								2
+							],
+							"argt": [
+								[
+									16,
+									null
+								],
+								[
+									16,
+									null
+								]
+							]
+						}
+					]
+				}
+			},
+			"DecrementIntegerValue": {
+				"info": "",
+				"versions": {
+					"mod_bettersaver": [
+						{
+							"address": null,
+							"name": null,
+							"argc": [
+								1,
+								1
+							],
+							"argt": [
+								[
+									16,
+									null
+								]
+							]
+						}
+					]
+				}
+			},
+			"IncrementIntegerValue": {
+				"info": "",
+				"versions": {
+					"mod_bettersaver": [
+						{
+							"address": null,
+							"name": null,
+							"argc": [
+								1,
+								1
+							],
+							"argt": [
+								[
+									16,
+									null
+								]
+							]
+						}
+					]
+				}
+			},
+			"RemoveIntegerValue": {
+				"info": "",
+				"versions": {
+					"mod_bettersaver": [
+						{
+							"address": null,
+							"name": null,
+							"argc": [
+								1,
+								1
+							],
+							"argt": [
+								[
+									16,
+									null
+								]
+							]
+						}
+					]
+				}
+			},
+			"GetFloatValue": {
+				"info": "",
+				"versions": {
+					"mod_bettersaver": [
+						{
+							"address": null,
+							"name": null,
+							"argc": [
+								1,
+								1
+							],
+							"argt": [
+								[
+									16,
+									null
+								]
+							]
+						}
+					]
+				}
+			},
+			"SetFloatValue": {
+				"info": "",
+				"versions": {
+					"mod_bettersaver": [
+						{
+							"address": null,
+							"name": null,
+							"argc": [
+								2,
+								2
+							],
+							"argt": [
+								[
+									16,
+									null
+								],
+								[
+									18,
+									null
+								]
+							]
+						}
+					]
+				}
+			},
+			"RemoveFloatValue": {
+				"info": "",
+				"versions": {
+					"mod_bettersaver": [
+						{
+							"address": null,
+							"name": null,
+							"argc": [
+								1,
+								1
+							],
+							"argt": [
 								[
 									16,
 									null
